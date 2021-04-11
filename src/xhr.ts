@@ -7,9 +7,6 @@ export interface IXhr {
   headers(url: string): Promise<any>
 };
 
-export const jsonHeader = {
-};
-
 export const defaultInit: RequestInit = {
   cache: 'no-cache',
   credentials: 'same-origin'
@@ -22,31 +19,41 @@ export const xhrHeader = {
 
 export class Xhr implements IXhr {
 
-  jsonHeader: any
   baseUrl: string
   
-  constructor(baseUrl: string, jsonHeader: any) {
+  constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
-    this.jsonHeader = jsonHeader;
   }
 
+  text(url: string, init: RequestInit = {}): Promise<any> {
+    return this.raw(url, init).then(res => {
+      if (res.ok) return res.text();
+      return res.text()
+        .then((_: any) => { throw _ });
+    });
+  }
+  
   json(url: string, init: RequestInit = {}): Promise<any> {
+    return this.raw(url, init).then(res => {
+      if (res.ok) return res.json();
+      return res.json()
+        .then((_: any) => { throw _});
+    });
+  }
+  
+  raw(url: string, init: RequestInit = {}): Promise<any> {
     let { headers, ...rest } = init;
     
     return fetch(this.baseUrl + url, {
       ...defaultInit,
       headers: {
-        ...this.jsonHeader,
         ...xhrHeader,
         ...headers
       },
       ...rest
-    } as any).then(res => {
-      if (res.ok) return res.json();
-      return res.json()
-        .then(_ => { throw _});
-    });
+    } as any);
   }
+
     
   form(data: any): any {
     const form = new FormData();

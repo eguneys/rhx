@@ -1,1 +1,1 @@
-import * from './xhr';
+export  * from './xhr';
