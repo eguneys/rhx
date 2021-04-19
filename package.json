@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/ndjson": "^2.0.0",
     "@types/node-fetch": "^2.5.10",
+    "@types/through": "^0.0.30",
     "ava": "^3.15.0",
     "tsc-watch": "^4.2.9",
     "typescript": "^4.2.3"
