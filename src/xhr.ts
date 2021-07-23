@@ -71,4 +71,19 @@ export class Xhr implements IXhr {
         return _.headers.raw();
       });
   }
+
+  headersAndJson(url: string) {
+    return fetch(this.baseUrl + url, {
+      redirect: 'manual'
+    })
+      .then(async _ => {
+        let headers = await _.headers.raw(),
+        body = await _.json();
+
+        if (_.ok) return {
+          headers,
+          body
+        }
+      });
+  }
 }

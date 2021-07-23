@@ -1,8 +1,8 @@
 const WebsocketClient = require('websocket').client;
 
 export type WebsocketOptions = {
-  endpoint: string,
-  headers?: string,
+  baseUrl: string,
+  headers?: object,
   setSend: (_: Emit) => void,
   receive: Emit
 }
@@ -13,12 +13,12 @@ export class Websocket {
 
   fuConnection: Promise<void>
   
-  get url(): string {
-    return this.opts.endpoint
+  get baseUrl(): string {
+    return this.opts.baseUrl
   }
 
-  get headers(): string {
-    return this.opts.headers || '';
+  get headers(): object {
+    return this.opts.headers || {};
   }
 
   constructor(readonly opts: WebsocketOptions) {
@@ -26,9 +26,14 @@ export class Websocket {
     this.ws = new WebsocketClient();
 
     this.fuConnection = new Promise((resolve, reject) => {
+
+      this.ws.on('connectFailed', (desc: string) => {
+        reject('websocket connect failed' + desc);
+      });
+      
       this.ws.on('connect', (connection: any) => {
         connection.on('close', () => {
-          reject('websocket closed ' + this.url);
+          reject('websocket closed ' + this.baseUrl);
         });
 
         connection.on('message', (data: any) => {
@@ -46,11 +51,14 @@ export class Websocket {
   }
 
 
-  connect() {
+  connect(endpoint: string, headers?: object) {
     let protocols: any = [],
     origin = null;
     
-    this.ws.connect(this.url, protocols, origin, this.headers);
+    this.ws.connect(this.baseUrl + endpoint, protocols, origin, {
+      ...this.headers,
+      ...headers
+    });
 
     return this.fuConnection;
   }

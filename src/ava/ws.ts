@@ -4,7 +4,7 @@ import { Websocket, Emit } from '../ws';
 test.cb('echo websocket', t => {
 
   let ws = new Websocket({
-    endpoint: 'wss://echo.websocket.org',
+    baseUrl: 'wss://echo.websocket.org',
     setSend: (send: Emit) => {
       send('Hello world!');
     },
@@ -16,7 +16,7 @@ test.cb('echo websocket', t => {
   });
 
 
-  ws.connect().then(() => t.end('closed'));
+  ws.connect('/').then(() => t.end('closed'));
 
   setTimeout(() => t.end('timeout'), 5000);
   
