@@ -3,16 +3,16 @@ import { Stream } from '../stream';
 
 let stream = new Stream('https://lichess.org');
 
-test.cb('stream current games', t => {
-  stream.ndjson('/api/tv/feed')
-    .then(({ response }) => {
+test('stream current games', async t => {
+  
+  await new Promise((resolve, reject) =>
+    stream.ndjson('/api/tv/feed')
+      .then(({ response }) => {
+        setTimeout(() => reject('timeout'), 5000);
+        response.on('data', e => {
+          t.like(e, { t: 'featured' });
+          resolve(undefined);
+        })
 
-      response.on('data', e => {
-        t.like(e, { t: 'featured' });
-        t.end();
-      })
-
-
-      setTimeout(() => t.end('timeout'), 5000);
-    });
+      }));
 });

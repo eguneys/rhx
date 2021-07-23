@@ -8,7 +8,7 @@
   "typings": "lib/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "watch": "tsc-watch --onSuccess 'ava'",
+    "watch": "tsc-watch --onSuccess 'ava --timeout=1m'",
     "build": "rm -rf lib && tsc",
     "test": "yarn -s build && ava",
     "ava": "ava",
@@ -18,7 +18,7 @@
     "@types/ndjson": "^2.0.0",
     "@types/node-fetch": "^2.5.10",
     "@types/through": "^0.0.30",
-    "ava": "^3.15.0",
+    "ava": "^4.0.0-alpha.2",
     "tsc-watch": "^4.2.9",
     "typescript": "^4.2.3"
   },
