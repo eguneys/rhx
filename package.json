@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "abort-controller": "^3.0.0",
+    "form-data-encoder": "^2.1.4",
     "ndjson": "^2.0.0",
     "node-fetch": "^2.6.1",
     "websocket": "^1.0.34"

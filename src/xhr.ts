@@ -1,4 +1,4 @@
-import FormData from 'form-data';
+import { Readable } from 'stream';
 
 export interface IXhr {
   json<A>(url: string, opts?: any): Promise<A | undefined>;
@@ -59,7 +59,7 @@ export class Xhr implements IXhr {
     for (let key in data) {
       form.append(key, data[key]);
     }
-    return form;
+    return form
   }
 
   headers(url: string) {
