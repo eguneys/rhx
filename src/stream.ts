@@ -1,5 +1,5 @@
+import { Readable } from 'node:stream'
 import AbortController from 'abort-controller';
-import fetch from 'node-fetch';
 import ndjson from 'ndjson';
 
 export interface IStream {
@@ -41,10 +41,12 @@ export class Stream implements IStream {
       if (!response.ok) {
         throw response.statusText;
       }
+
+      const readableNodeStream = Readable.fromWeb(response.body as any)
       
       return {
         abort,
-        response: response.body.pipe(ndjson.parse())
+        response: readableNodeStream.pipe(ndjson.parse())
       };
     });
   }

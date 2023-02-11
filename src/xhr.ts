@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import FormData from 'form-data';
 
 export interface IXhr {
@@ -68,7 +67,7 @@ export class Xhr implements IXhr {
       redirect: 'manual'
     })
       .then(_ => {
-        return _.headers.raw();
+        return _.headers.values();
       });
   }
 
@@ -77,7 +76,7 @@ export class Xhr implements IXhr {
       redirect: 'manual'
     })
       .then(async _ => {
-        let headers = await _.headers.raw(),
+        let headers = await _.headers.values(),
         body = await _.json();
 
         if (_.ok) return {

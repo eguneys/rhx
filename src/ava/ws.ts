@@ -50,6 +50,6 @@ test('echo websocket', async t => {
       pTimeout(4000)
     ])
   } catch (e) {
-    t.fail(e)
+    t.fail()
   }
 });
