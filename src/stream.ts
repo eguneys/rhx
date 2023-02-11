@@ -43,7 +43,7 @@ export class Stream implements IStream {
       }
 
       const readableNodeStream = Readable.fromWeb(response.body as any)
-      readableNodeStream.on('error', e => { console.warn(e) })
+      readableNodeStream.on('error', e => { })
       
       return {
         abort,
