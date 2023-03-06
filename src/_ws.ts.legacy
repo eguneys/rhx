@@ -1,4 +1,5 @@
-const WebsocketClient = require('websocket').client;
+//const WebsocketClient = require('websocket').client;
+import { WebsocketClient } from 'websocket'
 
 export type WebsocketOptions = {
   baseUrl: string,

@@ -1,6 +1,6 @@
-import { Readable } from 'node:stream'
 import AbortController from 'abort-controller';
 import ndjson from 'ndjson';
+import fetch from 'node-fetch'
 
 export interface IStream {
   ndjson(url: string, headers?: any): Promise<StreamingResponse>;
@@ -38,16 +38,16 @@ export class Stream implements IStream {
       ...rest
     }).then(response => {
 
-      if (!response.ok) {
+      if (!response.ok || !response.body) {
         throw response.statusText;
       }
 
-      const readableNodeStream = Readable.fromWeb(response.body as any)
-      readableNodeStream.on('error', e => { })
-      
+      //const readableNodeStream = Readable.fromWeb(response.body as any)
+      //readableNodeStream.on('error', e => { })
+
       return {
         abort,
-        response: readableNodeStream.pipe(ndjson.parse())
+        response: response.body.pipe(ndjson.parse())
       };
     });
   }

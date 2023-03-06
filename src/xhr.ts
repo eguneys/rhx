@@ -1,5 +1,3 @@
-import { Readable } from 'stream';
-
 export interface IXhr {
   json<A>(url: string, opts?: any): Promise<A | undefined>;
   form(data: any): any;
