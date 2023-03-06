@@ -5,6 +5,7 @@
     "src/*.ts"
   ],
   "main": "lib/index.js",
+  "type": "module",
   "typings": "lib/index.d.ts",
   "license": "MIT",
   "scripts": {

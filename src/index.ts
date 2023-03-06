@@ -1,3 +1,3 @@
-export * from './xhr';
-export * from './stream';
+export * from './xhr.js';
+export * from './stream.js';
 //export * from './ws';
